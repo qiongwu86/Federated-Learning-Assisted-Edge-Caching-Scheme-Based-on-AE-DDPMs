@@ -59,7 +59,6 @@ if __name__ == '__main__':
     ae_am_delay_100 = []
 
     v2i_rate = env.Compute_Performance_Train_mobility(client_num)
-    print(f' v2i rate: {v2i_rate / 8000000} ',len(v2i_rate),v2i_rate)
     while idx < args.epochs:
         print(f' | Global Training Round : {idx + 1}')
         gl_ae_w1,gl_dm_w1,client_epoch_time1 = train_hfl(args,train_idx1,Train_data1,gl_dm, gl_ae)
@@ -106,7 +105,6 @@ if __name__ == '__main__':
             request_number = sum(user_request_num)/len(user_request_num)
             v2i_rate_avg = sum(v2i_rate)/len(v2i_rate)
             ae_am_delay_100 = request_delay2(cache_hit_ratio_100, request_number, v2i_rate_avg)
-            print('request_number',request_number)
             Oracle_request_delay = request_delay2(Oracle_hit_ratio_avg,request_number, v2i_rate_avg)
             ae_dm_request_delay = request_delay2(AE_DDPM_cache_avg,request_number, v2i_rate_avg)
             WGAN_request_delay = request_delay2(GAN_cache_efficiency_avg,request_number,v2i_rate_avg)
