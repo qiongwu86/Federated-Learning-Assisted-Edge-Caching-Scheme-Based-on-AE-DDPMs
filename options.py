@@ -5,7 +5,7 @@ def args_parser():
     parser = argparse.ArgumentParser()
     # federated arguments (Notation for the arguments followed from paper)
     # DDPM 参数
-    parser.add_argument('--epochs', type=int, default=5,
+    parser.add_argument('--epochs', type=int, default=30,
                         help="number of rounds of training")
     parser.add_argument('--lr', type=float, default=0.001,
                         help='learning rate')
