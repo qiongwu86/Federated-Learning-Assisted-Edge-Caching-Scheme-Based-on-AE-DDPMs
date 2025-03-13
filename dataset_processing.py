@@ -16,25 +16,22 @@ def sampling_mobility(args,vehicle_num):
     :return: user_group_train, the idx of sample for each client for training
     :return: user_group_test, the idx of sample for each client for testing
     """
-    # 存储每个client信息
     model_manager = utils.ModelManager('clients')
     '''Do you want to clean workspace and retrain model/clients again?'''
     '''if you want to change test_size or retrain model/clients, please set clean_workspace True'''
     model_manager.clean_workspace(args.clean_clients)
-    # 导入模型信息
     try:
         users_group_train = model_manager.load_model(args.dataset + '-user_group_train')
         users_group_test = model_manager.load_model(args.dataset + '-user_group_test')
         sample = model_manager.load_model(args.dataset + '-sample')
     except OSError:
         ratings, user_info = get_dataset(args)
-        users_num_client = np.random.randint(10,15,vehicle_num)   # 生成一个形状为vehicle_num的数组，数组中的每个元素都是从10到14之间的随机整数
+        users_num_client = np.random.randint(10,15,vehicle_num) 
         a=0
         for i in range(vehicle_num):
             a+=users_num_client[i]
         for i in range(vehicle_num):
             users_num_client[i] = int((user_info.index[-1] + 1) * users_num_client[i] / a )
-        print('each vehicle allocated data:',users_num_client)
         user_seq_client=[]
         for i in range(vehicle_num):
             num=0
@@ -54,13 +51,11 @@ def sampling_mobility(args,vehicle_num):
             NUM_train = int(0.7*len(users_group_all[i]))
             users_group_train[i] = set(np.random.choice(list(users_group_all[i]), NUM_train, replace=False))
             users_group_test[i] = users_group_all[i] - users_group_train[i]
-
             users_group_train[i] = list(users_group_train[i])
             users_group_test[i] = list(users_group_test[i])
             users_group_train[i].sort()
             users_group_test[i].sort()
             all_test_num += NUM_train/0.7*0.3
-        print('all_test_num',all_test_num)
         # vehicle_request_num = dict([(k, []) for k in range(args.epochs)])
         #
         # for i in range(args.epochs):
